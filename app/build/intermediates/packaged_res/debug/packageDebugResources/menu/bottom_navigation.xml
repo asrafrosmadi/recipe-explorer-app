@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navRecipes"
+        android:icon="@drawable/recipes_navi_selector"
+        android:title="Recipes" />
+
+    <item
+        android:id="@+id/navBookmarks"
+        android:icon="@drawable/bookmarks_navi_selector"
+        android:title="Bookmarks" />
+
+</menu>

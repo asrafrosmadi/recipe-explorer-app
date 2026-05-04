@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="accent">#FF8F00</color>
+    <color name="background">#F7F9FC</color>
+    <color name="bg_light_blue">#DBF1FF</color>
+    <color name="primary">#1565C0</color>
+    <color name="primaryDark">#0D47A1</color>
+    <color name="textPrimary">#1D2433</color>
+    <color name="white">#FFFFFF</color>
+    <string name="app_name">Recipe Explorer</string>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">@color/primaryDark</item>
+        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="colorAccent">@color/accent</item>
+    </style>
+</resources>

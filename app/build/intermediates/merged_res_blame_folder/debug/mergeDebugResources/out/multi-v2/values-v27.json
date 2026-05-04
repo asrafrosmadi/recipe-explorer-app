@@ -1,0 +1,28 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.asrafrosmadi.recipeexplorer.app-mergeDebugResources-39:/values-v27/values-v27.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\U S E R\\Desktop\\recipe-explorer-app\\app\\src\\main\\res\\values-v27\\styles.xml",
+                    "from": {
+                        "startLines": "1",
+                        "startColumns": "4",
+                        "startOffsets": "17",
+                        "endLines": "3",
+                        "endColumns": "12",
+                        "endOffsets": "164"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "4",
+                        "endColumns": "12",
+                        "endOffsets": "200"
+                    }
+                }
+            ]
+        }
+    ]
+}
