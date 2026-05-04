@@ -145,6 +145,14 @@ https://dummyjson.com/recipes/search?q=margherita
 
 ---
 
+📷 App Preview
+
+* Recipes Tab
+![img.png](img.png)
+
+* Bookmarks Tab
+![img_1.png](img_1.png)
+
 ## 👨‍💻 Author
 
 **Ahmad Amirul Asraf Bin Rosmadi**
