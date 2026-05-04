@@ -94,7 +94,7 @@ Browse, search, and bookmark your favorite recipes with a smooth and responsive 
 1. Clone this repository:
 
    ```bash
-   git clone https://github.com/YOUR_USERNAME/recipe-explorer-app.git
+   git clone https://github.com/asrafrosmadi/recipe-explorer-app.git
    ```
 
 2. Open in **Android Studio**
