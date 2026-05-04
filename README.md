@@ -147,11 +147,14 @@ https://dummyjson.com/recipes/search?q=margherita
 
 📷 App Preview
 
-* Recipes Tab
-![img.png](img.png)
+* Recipes Tab UI
+<img width="300" height="683" alt="Recipes UI" src="https://github.com/user-attachments/assets/1e5dac2c-a72f-448e-a7af-617d8a9386c8" />
 
-* Bookmarks Tab
-![img_1.png](img_1.png)
+* Bookmarks Tab UI
+<img width="300" height="683" alt="Bookmarks UI" src="https://github.com/user-attachments/assets/ce26ad20-b676-4a04-a9ed-7a0e05768410" />
+
+* Recipe Details UI
+<img width="300" height="683" alt="Recipes Details UI" src="https://github.com/user-attachments/assets/0b7461a2-fc98-443a-984c-ac215d0f90fa" />
 
 ## 👨‍💻 Author
 
