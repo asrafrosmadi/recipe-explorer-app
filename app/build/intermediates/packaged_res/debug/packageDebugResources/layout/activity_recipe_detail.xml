@@ -29,8 +29,55 @@
                 android:layout_marginTop="-28dp"
                 android:background="@drawable/bg_recipe_detail_card"
                 android:orientation="vertical"
-                android:paddingTop="20dp"
+                android:paddingTop="15dp"
                 android:paddingBottom="20dp">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp">
+
+                    <TextView
+                        android:id="@+id/detailDifficulty"
+                        android:textColor="@color/primary"
+                        android:textSize="13sp"
+                        android:background="@drawable/bg_other_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"/>
+
+                    <TextView
+                        android:id="@+id/detailMealType"
+                        android:textColor="@color/primary"
+                        android:textSize="13sp"
+                        android:background="@drawable/bg_other_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"/>
+
+                    <TextView
+                        android:id="@+id/detailCuisine"
+                        android:textColor="@color/primary"
+                        android:textSize="13sp"
+                        android:background="@drawable/bg_other_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"/>
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/detailTitle"
@@ -39,23 +86,165 @@
                     android:textColor="@color/textPrimary"
                     android:textSize="26sp"
                     android:textStyle="bold"
+                    android:layout_marginTop="5dp"
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp" />
 
-                <TextView
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp">
+
+                    <TextView
+                        android:id="@+id/detailRating"
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp"
+                        android:background="@drawable/bg_rating_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"/>
+
+                    <TextView
+                        android:id="@+id/detailReviewCount"
+                        android:textColor="#78909C"
+                        android:textSize="13sp"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/detailMeta"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:textColor="#667085"-->
+<!--                        android:textSize="13sp" />-->
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="24dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp">
+
+                    <!-- PREP -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="PREPARATION"
+                            android:textSize="12sp"
+                            android:textColor="#9E9E9E"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/detailPrep"
+                            android:text="15 min"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/textPrimary"/>
+
+                    </LinearLayout>
+
+                    <!-- DIVIDER -->
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="32dp"
+                        android:background="#E0E0E0"/>
+
+                    <!-- COOK -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="COOK"
+                            android:textSize="12sp"
+                            android:textColor="#9E9E9E"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/detailCook"
+                            android:text="30 min"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/textPrimary"/>
+
+                    </LinearLayout>
+
+                    <!-- DIVIDER -->
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="32dp"
+                        android:background="#E0E0E0"/>
+
+                    <!-- SERVINGS -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="SERVINGS"
+                            android:textSize="12sp"
+                            android:textColor="#9E9E9E"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/detailServings"
+                            android:text="4"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/textPrimary"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--<TextView
                     android:id="@+id/detailMeta"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="4dp"
                     android:textColor="#667085"
                     android:textSize="14sp"
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp" />
-
+-->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="22dp"
+                    android:layout_marginTop="24dp"
                     android:text="Ingredients"
                     android:textColor="@color/textPrimary"
                     android:background="@color/bg_light_blue"

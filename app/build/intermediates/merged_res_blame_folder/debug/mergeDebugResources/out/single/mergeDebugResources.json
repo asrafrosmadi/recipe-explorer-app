@@ -44,6 +44,10 @@
         "source": "C:\\Users\\U S E R\\.gradle\\daemon\\9.0.0\\com.asrafrosmadi.recipeexplorer.app-main-43:\\drawable\\bg_search.xml"
     },
     {
+        "merged": "com.asrafrosmadi.recipeexplorer.app-debug-41:/layout_activity_recipe_detail.xml.flat",
+        "source": "com.asrafrosmadi.recipeexplorer.app-main-43:/layout/activity_recipe_detail.xml"
+    },
+    {
         "merged": "C:\\Users\\U S E R\\.gradle\\daemon\\9.0.0\\com.asrafrosmadi.recipeexplorer.app-debug-41:\\menu_bottom_navigation.xml.flat",
         "source": "C:\\Users\\U S E R\\.gradle\\daemon\\9.0.0\\com.asrafrosmadi.recipeexplorer.app-main-43:\\menu\\bottom_navigation.xml"
     },
@@ -82,6 +86,10 @@
     {
         "merged": "C:\\Users\\U S E R\\.gradle\\daemon\\9.0.0\\com.asrafrosmadi.recipeexplorer.app-debug-41:\\mipmap-hdpi_ic_launcher_round.webp.flat",
         "source": "C:\\Users\\U S E R\\.gradle\\daemon\\9.0.0\\com.asrafrosmadi.recipeexplorer.app-main-43:\\mipmap-hdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\U S E R\\.gradle\\daemon\\9.0.0\\com.asrafrosmadi.recipeexplorer.app-debug-41:\\drawable_bg_other_card.xml.flat",
+        "source": "C:\\Users\\U S E R\\.gradle\\daemon\\9.0.0\\com.asrafrosmadi.recipeexplorer.app-main-43:\\drawable\\bg_other_card.xml"
     },
     {
         "merged": "C:\\Users\\U S E R\\.gradle\\daemon\\9.0.0\\com.asrafrosmadi.recipeexplorer.app-debug-41:\\drawable_ic_outline_close.xml.flat",
@@ -124,6 +132,10 @@
         "source": "C:\\Users\\U S E R\\.gradle\\daemon\\9.0.0\\com.asrafrosmadi.recipeexplorer.app-main-43:\\drawable\\ic_recipe_filled.png"
     },
     {
+        "merged": "C:\\Users\\U S E R\\.gradle\\daemon\\9.0.0\\com.asrafrosmadi.recipeexplorer.app-debug-41:\\drawable_bg_rating_card.xml.flat",
+        "source": "C:\\Users\\U S E R\\.gradle\\daemon\\9.0.0\\com.asrafrosmadi.recipeexplorer.app-main-43:\\drawable\\bg_rating_card.xml"
+    },
+    {
         "merged": "C:\\Users\\U S E R\\.gradle\\daemon\\9.0.0\\com.asrafrosmadi.recipeexplorer.app-debug-41:\\drawable_ic_search.png.flat",
         "source": "C:\\Users\\U S E R\\.gradle\\daemon\\9.0.0\\com.asrafrosmadi.recipeexplorer.app-main-43:\\drawable\\ic_search.png"
     },
@@ -158,10 +170,6 @@
     {
         "merged": "C:\\Users\\U S E R\\.gradle\\daemon\\9.0.0\\com.asrafrosmadi.recipeexplorer.app-debug-41:\\drawable_bg_chip.xml.flat",
         "source": "C:\\Users\\U S E R\\.gradle\\daemon\\9.0.0\\com.asrafrosmadi.recipeexplorer.app-main-43:\\drawable\\bg_chip.xml"
-    },
-    {
-        "merged": "com.asrafrosmadi.recipeexplorer.app-debug-41:/layout_activity_main.xml.flat",
-        "source": "com.asrafrosmadi.recipeexplorer.app-main-43:/layout/activity_main.xml"
     },
     {
         "merged": "C:\\Users\\U S E R\\.gradle\\daemon\\9.0.0\\com.asrafrosmadi.recipeexplorer.app-debug-41:\\mipmap-xxhdpi_ic_launcher_foreground.webp.flat",

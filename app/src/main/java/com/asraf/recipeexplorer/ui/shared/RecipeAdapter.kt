@@ -37,13 +37,17 @@ class RecipeAdapter(
     inner class VH(view: View) : RecyclerView.ViewHolder(view) {
         private val img: ImageView = view.findViewById(R.id.imgRecipe)
         private val title: TextView = view.findViewById(R.id.titleText)
+        private val rating: TextView = view.findViewById(R.id.metaRating)
+        private val reviewCount: TextView = view.findViewById(R.id.metaReviewCount)
         private val meta: TextView = view.findViewById(R.id.metaText)
         private val tags: TextView = view.findViewById(R.id.tagsText)
         private val fav: ImageButton = view.findViewById(R.id.favButton)
 
         fun bind(recipe: Recipe) {
             title.text = recipe.name
-            meta.text = "${recipe.cuisine} • ${recipe.difficulty} • ${recipe.prepTimeMinutes + recipe.cookTimeMinutes} min • ⭐ ${recipe.rating}"
+            rating.text = "⭐ ${recipe.rating}"
+            reviewCount.text = "${recipe.reviewCount} reviews"
+            meta.text = "${recipe.cuisine} • ${recipe.difficulty} • ${recipe.prepTimeMinutes + recipe.cookTimeMinutes} min"
             tags.text = (recipe.mealType + recipe.tags).distinct().joinToString(" • ")
             fav.setImageResource(if (isFavorite(recipe.id)) R.drawable.ic_star_filled else R.drawable.ic_star_outline)
             ImageLoader.load(itemView.context, recipe.image, img, scope)

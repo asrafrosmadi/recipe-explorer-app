@@ -52,15 +52,26 @@ class RecipeDetailActivity : AppCompatActivity() {
         }
 
         findViewById<TextView>(R.id.detailTitle).text = recipe.name
+        findViewById<TextView>(R.id.detailRating).text = "⭐ ${recipe.rating}"
+        findViewById<TextView>(R.id.detailReviewCount).text = "${recipe.reviewCount} reviews   •   ${recipe.caloriesPerServing} kcal/serving"
+        findViewById<TextView>(R.id.detailDifficulty).text = "${recipe.difficulty}"
+        findViewById<TextView>(R.id.detailMealType).text = "${recipe.mealType.joinToString(", ")}"
+        findViewById<TextView>(R.id.detailCuisine).text = "${recipe.cuisine}"
+        findViewById<TextView>(R.id.detailPrep).text = "${recipe.prepTimeMinutes} min"
+        findViewById<TextView>(R.id.detailCook).text = "${recipe.cookTimeMinutes} min"
+        findViewById<TextView>(R.id.detailServings).text = "${recipe.servings}"
 
-        findViewById<TextView>(R.id.detailMeta).text = buildString {
-            append("• Cuisine: ${recipe.cuisine}  • Difficulty: ${recipe.difficulty}\n")
-            append("• Prep Time: ${recipe.prepTimeMinutes} Minutes  • Cook Time: ${recipe.cookTimeMinutes} Minutes\n")
-            append("• Servings: ${recipe.servings} People\n")
-            append("• Calories: ${recipe.caloriesPerServing} Kcal/Serving\n")
-            append("• Rating ${recipe.rating} (${recipe.reviewCount} reviews)\n")
-            append("• Meal Type: ${recipe.mealType.joinToString(", ")}")
-        }
+//        findViewById<TextView>(R.id.detailMeta).text = buildString {
+//            append("• Difficulty: ${recipe.difficulty}\n")
+//            append("• Meal Type: ${recipe.mealType.joinToString(", ")}\n")
+//            append("• Cuisine: ${recipe.cuisine}\n")
+//            append("• Servings: ${recipe.servings} People\n")
+//            append("• Calories: ${recipe.caloriesPerServing} Kcal/Serving\n")
+//            append("${recipe.caloriesPerServing} kcal/serving\n")
+//            append("• Prep Time: ${recipe.prepTimeMinutes} Minutes\n")
+//            append("• Cook Time: ${recipe.cookTimeMinutes} Minutes\n")
+//            append("• Rating ${recipe.rating} (${recipe.reviewCount} reviews)\n")
+//        }
 
         findViewById<TextView>(R.id.detailIngredients).text =
             recipe.ingredients
