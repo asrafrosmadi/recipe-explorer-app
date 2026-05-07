@@ -11,8 +11,32 @@ android {
         applicationId = "com.asrafrosmadi.recipeexplorer"
         minSdk = 23
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 100
+        versionName = "1.0.0"
+    }
+
+    android {
+        buildTypes {
+            debug {
+                applicationIdSuffix = ".debug"
+                versionNameSuffix = "-debug"
+                isMinifyEnabled = true
+                isShrinkResources = true
+                proguardFiles(
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
+                )
+            }
+
+            release {
+                isMinifyEnabled = true
+                isShrinkResources = true
+                proguardFiles(
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
+                )
+            }
+        }
     }
 
     compileOptions {
