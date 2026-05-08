@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "813384025806",
+    "project_id": "recipe-explorer-stg",
+    "storage_bucket": "recipe-explorer-stg.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:813384025806:android:d268c7a64799a7c670329f",
+        "android_client_info": {
+          "package_name": "com.asrafrosmadi.recipeexplorer.stg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuYegCc0ccexo4Va2bL_-E1jHWpAAKsco"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
