@@ -102,9 +102,9 @@ Browse, search, and bookmark your favorite recipes with a smooth and responsive 
 3. Configure environment:
 
     * JDK: **17**
-    * Android Gradle Plugin: **8.7.3**
-    * Gradle: **9.0.0**
-    * Gradle Wrapper: **Amazon Coretto-17.0.9**
+    * Android Gradle Plugin: **9.1.1**
+    * Gradle: **9.4.1**
+    * Gradle Wrapper: **Amazon Coretto-17.0.19**
 
 4. Sync Gradle
 
