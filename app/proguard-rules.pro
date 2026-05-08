@@ -21,3 +21,6 @@
     public static **[] values();
     public static ** valueOf(java.lang.String);
 }
+
+# Fix R8 missing classes error
+-dontwarn javax.annotation.Nullable
