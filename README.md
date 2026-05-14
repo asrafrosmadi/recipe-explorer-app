@@ -4,6 +4,9 @@ A modern **Android Recipe Explorer app** built with **Kotlin**, queries by the *
 
 Browse, search, and bookmark your favorite recipes with a smooth and responsive UI.
 
+Our app is now available in Play Store. Get the app here!
+https://play.google.com/store/apps/details?id=com.asrafrosmadi.recipeexplorer
+
 ---
 
 ## ✨ Features
