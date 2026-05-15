@@ -46,8 +46,8 @@ android {
         create("production") {
             dimension = "env"
             applicationId = "com.asrafrosmadi.recipeexplorer"
-            versionCode = 1
-            versionName = "1.0.0"
+            versionCode = 101
+            versionName = "1.0.1"
             buildConfigField(
                 "String",
                 "ENVIRONMENT",
