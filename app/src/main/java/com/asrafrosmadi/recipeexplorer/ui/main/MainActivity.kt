@@ -7,7 +7,11 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.*
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -20,16 +24,19 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.asrafrosmadi.recipeexplorer.BuildConfig
 import com.asrafrosmadi.recipeexplorer.R
 import com.asrafrosmadi.recipeexplorer.data.model.Recipe
 import com.asrafrosmadi.recipeexplorer.ui.detail.RecipeDetailActivity
 import com.asrafrosmadi.recipeexplorer.ui.shared.RecipeAdapter
+import com.asrafrosmadi.recipeexplorer.ui.update.InAppUpdateManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class MainActivity : AppCompatActivity() {
     private val viewModel: RecipeListViewModel by viewModels()
     private lateinit var adapter: RecipeAdapter
+    private lateinit var inAppUpdateManager: InAppUpdateManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +46,12 @@ class MainActivity : AppCompatActivity() {
         window.navigationBarColor = Color.TRANSPARENT
 
         setContentView(R.layout.activity_main)
+
+        inAppUpdateManager = InAppUpdateManager(this)
+        if (BuildConfig.ENVIRONMENT == "PRODUCTION" && !BuildConfig.DEBUG) {
+            inAppUpdateManager.checkForUpdate()
+        }
+
         setupEdgeToEdgeInsets()
 
         val recycler = findViewById<RecyclerView>(R.id.recyclerView)
@@ -52,7 +65,12 @@ class MainActivity : AppCompatActivity() {
         val mealTypeFilterBtn = findViewById<TextView>(R.id.mealTypeFilterBtn)
         val btnClearFavorites = findViewById<ImageButton>(R.id.btnClearFavorites)
 
-        adapter = RecipeAdapter(lifecycleScope, { viewModel.isFavorite(it) }, { viewModel.toggleFavorite(it) }, { openDetail(it) })
+        adapter = RecipeAdapter(
+            lifecycleScope,
+            { viewModel.isFavorite(it) },
+            { viewModel.toggleFavorite(it) },
+            { openDetail(it) })
+
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.adapter = adapter
         recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -210,9 +228,27 @@ class MainActivity : AppCompatActivity() {
 
             adapter.submit(state.recipes)
 
-            empty.visibility = if (state.recipes.isEmpty() && !state.loading) android.view.View.VISIBLE else android.view.View.GONE
-            error.visibility = if (state.error.isNullOrBlank()) android.view.View.GONE else android.view.View.VISIBLE
+            empty.visibility = if (state.recipes.isEmpty() && !state.loading) View.VISIBLE else View.GONE
+            error.visibility = if (state.error.isNullOrBlank()) View.GONE else View.VISIBLE
             error.text = state.error
+        }
+    }
+
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == InAppUpdateManager.Companion.UPDATE_REQUEST_CODE) {
+            if (resultCode != RESULT_OK) {
+                Toast.makeText(
+                    this,
+                    "New app version available! Update the app to continue.",
+                    Toast.LENGTH_LONG
+                ).show()
+                finish()
+            }
         }
     }
 
@@ -304,6 +340,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         viewModel.refreshFavoriteState()
+        inAppUpdateManager.onResume()
     }
 
     private fun openDetail(recipe: Recipe) {
