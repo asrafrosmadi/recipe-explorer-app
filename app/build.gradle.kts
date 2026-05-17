@@ -9,6 +9,10 @@ android {
 
     flavorDimensions += "env"
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
         minSdk = 24
         targetSdk = 37
@@ -20,6 +24,11 @@ android {
             applicationId = "com.asrafrosmadi.recipeexplorer.dev"
             versionCode = 1
             versionName = "0.0.1"
+            buildConfigField(
+                "String",
+                "ENVIRONMENT",
+                "\"DEVELOPMENT\""
+            )
         }
 
         create("staging") {
@@ -27,13 +36,23 @@ android {
             applicationId = "com.asrafrosmadi.recipeexplorer.stg"
             versionCode = 1
             versionName = "0.0.1"
+            buildConfigField(
+                "String",
+                "ENVIRONMENT",
+                "\"STAGING\""
+            )
         }
 
         create("production") {
             dimension = "env"
             applicationId = "com.asrafrosmadi.recipeexplorer"
-            versionCode = 1
-            versionName = "1.0.0"
+            versionCode = 101
+            versionName = "1.0.1"
+            buildConfigField(
+                "String",
+                "ENVIRONMENT",
+                "\"PRODUCTION\""
+            )
         }
     }
 
@@ -58,7 +77,7 @@ android {
         release {
             isMinifyEnabled = true
             isShrinkResources = true
-            signingConfig = signingConfigs.getByName("debug") // local testing only
+//            signingConfig = signingConfigs.getByName("debug") // local testing only
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -91,6 +110,8 @@ dependencies {
 
     //  Google Dependencies
     implementation("com.google.android.material:material:1.14.0")
+    implementation("com.google.android.play:app-update:2.1.0")
+    implementation("com.google.android.play:app-update-ktx:2.1.0")
 
     //  Firebase Dependencies
     implementation(platform("com.google.firebase:firebase-bom:34.13.0"))
