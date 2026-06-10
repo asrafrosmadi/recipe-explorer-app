@@ -21,6 +21,9 @@ class RecipeListViewModel(app: Application) : AndroidViewModel(app) {
     private var selectedDifficulty = "All Difficulty"
     private var selectedMealType = "All Meal Type"
 
+    // #6 - Prevent duplicate API calls before livedata loading state updates.
+    private var isDataFetch = false
+
     private val _state = MutableLiveData(UiState())
     val state: LiveData<UiState> = _state
 
@@ -30,19 +33,24 @@ class RecipeListViewModel(app: Application) : AndroidViewModel(app) {
 
     fun loadInitial(query: String = currentQuery) {
         currentQuery = query.trim()
-        skip = 0; total = Int.MAX_VALUE; allLoaded.clear()
+        skip = 0
+        total = Int.MAX_VALUE
+        allLoaded.clear()
         fetch(reset = true)
     }
 
     fun refresh() = loadInitial(currentQuery)
 
     fun loadMore() {
-        if (_state.value?.loading == true || skip >= total) return
+        // #6 - Replace state ui with logic state using flag.
+//        if (_state.value?.loading == true || skip >= total) return
+        if (isDataFetch || skip >= total) return
         fetch(reset = false)
     }
 
     fun setFilters(difficulty: String, mealType: String) {
-        selectedDifficulty = difficulty; selectedMealType = mealType
+        selectedDifficulty = difficulty
+        selectedMealType = mealType
         publish()
     }
 
@@ -86,17 +94,24 @@ class RecipeListViewModel(app: Application) : AndroidViewModel(app) {
 
     fun showRecipes() {
         _state.value = _state.value?.copy(mode = Mode.RECIPES)
-        loadInitial(currentQuery)
+
+        // #6 - Only reload if the list is empty to avoids refresh repeatedly.
+        if (allLoaded.isEmpty()) {
+            loadInitial(currentQuery)
+        } else {
+            publish()
+        }
     }
 
     private fun fetch(reset: Boolean) {
-        _state.postValue(
-            _state.value?.copy(
-                loading = true,
-                error = null,
-                mode = Mode.RECIPES,
-                bookmarkMode = false
-            )
+        if (isDataFetch) return
+        isDataFetch = true
+
+        _state.value = _state.value?.copy(
+            loading = true,
+            error = null,
+            mode = Mode.RECIPES,
+            bookmarkMode = false
         )
 
         viewModelScope.launch {
@@ -107,6 +122,12 @@ class RecipeListViewModel(app: Application) : AndroidViewModel(app) {
 
                 if (reset) allLoaded.clear()
                 allLoaded.addAll(response.recipes)
+
+                // #6 - Prevention layer: apply distinctBy to remove duplicate recipes by "id"
+                allLoaded = allLoaded
+                    .distinctBy { it.id }
+                    .toMutableList()
+
                 skip = allLoaded.size
                 total = response.total
                 withContext(Dispatchers.IO) {
@@ -121,6 +142,8 @@ class RecipeListViewModel(app: Application) : AndroidViewModel(app) {
                     })
 
                 publish(error = e.message ?: "Something went wrong. Please try again.")
+            } finally {
+                isDataFetch = false
             }
         }
     }
