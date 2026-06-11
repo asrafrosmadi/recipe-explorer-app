@@ -18,6 +18,8 @@ class RecipeListViewModel(app: Application) : AndroidViewModel(app) {
     private var total = Int.MAX_VALUE
     private var currentQuery = ""
     private var allLoaded = mutableListOf<Recipe>()
+    // #7 - Apply separate lists for recipe & bookmark to preserves each tab's state when switching
+    private var bookmarkLoaded = mutableListOf<Recipe>()
     private var selectedDifficulty = "All Difficulty"
     private var selectedMealType = "All Meal Type"
 
@@ -43,7 +45,6 @@ class RecipeListViewModel(app: Application) : AndroidViewModel(app) {
 
     fun loadMore() {
         // #6 - Replace state ui with logic state using flag.
-//        if (_state.value?.loading == true || skip >= total) return
         if (isDataFetch || skip >= total) return
         fetch(reset = false)
     }
@@ -55,39 +56,28 @@ class RecipeListViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun refreshFavoriteState() {
+        bookmarkLoaded = repo.getFavorites().toMutableList()
         if (_state.value?.mode == Mode.BOOKMARKS) {
-            allLoaded = repo.getFavorites().toMutableList()
-            skip = allLoaded.size
-            total = allLoaded.size
+            publish()
         }
-
-        publish()
     }
 
     fun clearAllFavorites() {
         repo.clearFavorites()
-
-        if (_state.value?.mode == Mode.BOOKMARKS) {
-            allLoaded.clear()
-            skip = 0
-            total = 0
-        }
-
+        bookmarkLoaded.clear()
         publish()
     }
 
     fun toggleFavorite(recipe: Recipe) {
         repo.toggleFavorite(recipe)
-
+        bookmarkLoaded = repo.getFavorites().toMutableList()
         publish()
     }
 
     fun isFavorite(id: Int) = repo.isFavorite(id)
 
     fun showBookmarks() {
-        allLoaded = repo.getFavorites().toMutableList()
-        skip = allLoaded.size
-        total = allLoaded.size
+        bookmarkLoaded = repo.getFavorites().toMutableList()
         _state.value = _state.value?.copy(mode = Mode.BOOKMARKS)
         publish()
     }
@@ -153,7 +143,7 @@ class RecipeListViewModel(app: Application) : AndroidViewModel(app) {
         val isBookmarks = currentMode == Mode.BOOKMARKS
 
         val displayedList = if (isBookmarks) {
-            allLoaded
+            bookmarkLoaded
         } else {
             allLoaded.filter { recipe ->
                 val diffOk =
