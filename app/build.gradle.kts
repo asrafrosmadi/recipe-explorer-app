@@ -104,6 +104,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.10.0")
     implementation("androidx.recyclerview:recyclerview:1.4.0")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0")
+    implementation("androidx.fragment:fragment-ktx:1.8.9")
 
     //  Lottie Anim Dependencies
     implementation("com.airbnb.android:lottie:6.7.1")
