@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.asrafrosmadi.recipeexplorer.R
 import com.asrafrosmadi.recipeexplorer.data.model.Recipe
 import com.asrafrosmadi.recipeexplorer.ui.detail.RecipeDetailActivity
-import com.asrafrosmadi.recipeexplorer.ui.main.RecipeListViewModel
+import com.asrafrosmadi.recipeexplorer.ui.main.viewmodel.RecipeListViewModel
 import com.asrafrosmadi.recipeexplorer.ui.shared.RecipeAdapter
 
 class BookmarksFragment : Fragment(R.layout.fragment_bookmarks) {

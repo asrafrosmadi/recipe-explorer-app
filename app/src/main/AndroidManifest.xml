@@ -15,7 +15,7 @@
         tools:targetApi="33">
 
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name=".ui.main.activity.MainActivity"
             android:windowSoftInputMode="adjustNothing"
             android:screenOrientation="portrait"
             android:exported="true">

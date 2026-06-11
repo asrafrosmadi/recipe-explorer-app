@@ -20,7 +20,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.asrafrosmadi.recipeexplorer.R
 import com.asrafrosmadi.recipeexplorer.data.model.Recipe
 import com.asrafrosmadi.recipeexplorer.ui.detail.RecipeDetailActivity
-import com.asrafrosmadi.recipeexplorer.ui.main.RecipeListViewModel
+import com.asrafrosmadi.recipeexplorer.ui.main.viewmodel.RecipeListViewModel
 import com.asrafrosmadi.recipeexplorer.ui.shared.RecipeAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
 

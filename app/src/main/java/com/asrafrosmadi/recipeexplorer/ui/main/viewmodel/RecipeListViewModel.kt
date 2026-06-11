@@ -1,4 +1,4 @@
-package com.asrafrosmadi.recipeexplorer.ui.main
+package com.asrafrosmadi.recipeexplorer.ui.main.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
