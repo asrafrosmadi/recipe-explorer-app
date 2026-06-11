@@ -1,4 +1,4 @@
-package com.asrafrosmadi.recipeexplorer.ui.main
+package com.asrafrosmadi.recipeexplorer.ui.main.activity
 
 import android.content.Intent
 import android.graphics.Color
@@ -17,6 +17,7 @@ import com.asrafrosmadi.recipeexplorer.BuildConfig
 import com.asrafrosmadi.recipeexplorer.R
 import com.asrafrosmadi.recipeexplorer.ui.main.fragment.BookmarksFragment
 import com.asrafrosmadi.recipeexplorer.ui.main.fragment.RecipesFragment
+import com.asrafrosmadi.recipeexplorer.ui.main.viewmodel.RecipeListViewModel
 import com.asrafrosmadi.recipeexplorer.ui.update.InAppUpdateManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
