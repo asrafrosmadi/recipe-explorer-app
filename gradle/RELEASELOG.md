@@ -1,6 +1,26 @@
 # Production App Release Log
 ---
 
+## v1.0.2 - Major App Changes
+Date Released: 12 JUNE 2026
+### Enhancements
+- Refactor bottom navigation using fragments.
+- Preserve Recipes and Bookmarks tab state during navigation.
+- Separate recipe and bookmark data sources to avoid state conflicts.
+- Fix duplicate recipes during filtering.
+- Prevent duplicate API requests during infinite scrolling.
+- Improve bookmark state synchronization across screens.
+- Enhance network and offline error handling.
+### Improvements
+- Added a feature that allows users to share recipes.
+- Enable recipe details sharing via WhatsApp & text.
+- Add interactive checklist for ingredients & cooking steps.
+- Add advanced recipe filtering feature. 
+- Support filtering by cuisine, cooking time, rating, calories and tags. 
+- Add active filter badge indicator. 
+- Add apply and reset actions for the filters. 
+#
+---
 ## v1.0.1 - App Improvement
 Date Released: 15 MAY 2026
 ### Improvements
