@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -113,23 +114,33 @@ class MainActivity : AppCompatActivity() {
             val currentList = viewModel.state.value?.recipes.orEmpty()
 
             if (currentList.isEmpty()) {
-                AlertDialog.Builder(this)
+                val dialog = AlertDialog.Builder(this)
                     .setTitle("Favorites Empty!")
                     .setMessage("Your favorite list is empty.")
                     .setPositiveButton("OK", null)
-                    .show()
+                    .create()
+
+                dialog.show()
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                    .setTextColor(ContextCompat.getColor(this, R.color.primary))
             } else {
-                AlertDialog.Builder(this)
+                val dialog = AlertDialog.Builder(this)
                     .setTitle("Clear Favorites!")
                     .setMessage("Do you want to remove all your favorite recipes?")
-                    .setPositiveButton("Yes") { dialog, _ ->
+                    .setPositiveButton("Yes") { dialogInterface, _ ->
                         viewModel.clearAllFavorites()
-                        dialog.dismiss()
+                        dialogInterface.dismiss()
                     }
-                    .setNegativeButton("No") { dialog, _ ->
-                        dialog.dismiss()
+                    .setNegativeButton("No") { dialogInterface, _ ->
+                        dialogInterface.dismiss()
                     }
-                    .show()
+                    .create()
+
+                dialog.show()
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                    .setTextColor(ContextCompat.getColor(this, R.color.primary))
+                dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+                    .setTextColor(ContextCompat.getColor(this, R.color.primary))
             }
         }
     }

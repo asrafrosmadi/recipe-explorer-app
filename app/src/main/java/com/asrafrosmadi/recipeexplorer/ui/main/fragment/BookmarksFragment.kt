@@ -3,6 +3,7 @@ package com.asrafrosmadi.recipeexplorer.ui.main.fragment
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -22,7 +23,7 @@ class BookmarksFragment : Fragment(R.layout.fragment_bookmarks) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val recycler = view.findViewById<RecyclerView>(R.id.recyclerView)
-        val empty = view.findViewById<TextView>(R.id.emptyView)
+        val empty = view.findViewById<LinearLayout>(R.id.emptyView)
 
         adapter = RecipeAdapter(
             viewLifecycleOwner.lifecycleScope,
@@ -46,6 +47,12 @@ class BookmarksFragment : Fragment(R.layout.fragment_bookmarks) {
                 else
                     View.GONE
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.refreshFavoriteState()
+        adapter.notifyDataSetChanged()
     }
 
     private fun openDetail(recipe: Recipe) {

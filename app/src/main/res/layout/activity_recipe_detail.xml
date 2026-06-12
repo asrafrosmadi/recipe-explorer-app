@@ -3,7 +3,7 @@
     android:id="@+id/detailRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="@color/white">
 
     <ScrollView
         android:id="@+id/detailScroll"
@@ -27,14 +27,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-28dp"
+                android:layout_marginBottom="0dp"
                 android:background="@drawable/bg_recipe_detail_card"
                 android:orientation="vertical"
                 android:paddingTop="15dp"
-                android:paddingBottom="20dp">
+                android:paddingBottom="30dp">
 
                 <LinearLayout
                     android:orientation="horizontal"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp">
@@ -76,6 +77,20 @@
                         android:paddingBottom="5dp"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"/>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <ImageButton
+                        android:id="@+id/shareBtn"
+                        android:layout_width="40dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/outline_add_link"
+                        android:background="@null"
+                        android:tint="@color/primary"
+                        android:contentDescription="Share recipe" />
 
                 </LinearLayout>
 
@@ -232,20 +247,11 @@
                 </LinearLayout>
 
                 <!--<TextView
-                    android:id="@+id/detailMeta"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:textColor="#667085"
-                    android:textSize="14sp"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp" />
--->
-                <TextView
+                    android:id="@+id/ingredientsHeader"
+                    android:text="Ingredients ▼"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
-                    android:text="Ingredients"
                     android:textColor="@color/textPrimary"
                     android:background="@color/bg_light_blue"
                     android:textSize="20sp"
@@ -253,10 +259,45 @@
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:paddingStart="20dp"
-                    android:paddingEnd="20dp" />
+                    android:paddingEnd="20dp"/>-->
 
-                <TextView
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/bg_light_blue"
+                    android:layout_marginTop="24dp">
+
+                    <TextView
+                        android:id="@+id/ingredientsHeader"
+                        android:text="Ingredients ▼"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"/>
+
+                    <TextView
+                        android:id="@+id/clearIngredientsTicks"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Clear"
+                        android:textColor="@color/primary"
+                        android:padding="8dp"
+                        android:textStyle="bold"
+                        android:layout_marginEnd="10dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/detailIngredients"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -264,13 +305,14 @@
                     android:textColor="#344054"
                     android:textSize="15sp"
                     android:paddingStart="20dp"
-                    android:paddingEnd="20dp" />
+                    android:paddingEnd="20dp"/>
 
-                <TextView
+                <!--<TextView
+                    android:id="@+id/instructionsHeader"
+                    android:text="Instructions ▼"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
-                    android:text="Instructions"
                     android:textColor="@color/textPrimary"
                     android:background="@color/bg_light_blue"
                     android:textSize="20sp"
@@ -278,10 +320,44 @@
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:paddingStart="20dp"
-                    android:paddingEnd="20dp" />
+                    android:paddingEnd="20dp"/>-->
 
-                <TextView
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/bg_light_blue"
+                    android:layout_marginTop="24dp">
+
+                    <TextView
+                        android:id="@+id/instructionsHeader"
+                        android:text="Instructions ▼"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"/>
+
+                    <TextView
+                        android:id="@+id/clearInstructionsTicks"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Clear"
+                        android:textColor="@color/primary"
+                        android:padding="8dp"
+                        android:textStyle="bold"
+                        android:layout_marginEnd="10dp"/>
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/detailInstructions"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -289,7 +365,7 @@
                     android:textColor="#344054"
                     android:textSize="15sp"
                     android:paddingStart="20dp"
-                    android:paddingEnd="20dp" />
+                    android:paddingEnd="20dp"/>
 
             </LinearLayout>
 

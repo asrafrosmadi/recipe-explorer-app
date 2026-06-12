@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/background"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -69,6 +69,18 @@
             android:textSize="14sp"
             android:background="@drawable/bg_filter_chip"/>
 
+        <ImageButton
+            android:id="@+id/advancedFilterBtn"
+            android:layout_width="0dp"
+            android:layout_weight="0.2"
+            android:layout_height="35dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="@null"
+            android:src="@drawable/ic_filter_list"
+            android:tint="@color/primary"
+            android:contentDescription="Advanced filters" />
+
     </LinearLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -83,20 +95,36 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
+                android:background="@color/background"
                 android:clipToPadding="false"
                 android:padding="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
-            <TextView
+            <LinearLayout
                 android:id="@+id/emptyView"
-                android:visibility="gone"
-                android:gravity="center"
-                android:text="No recipes available!"
-                android:textSize="16sp"
-                android:padding="24dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:lottie_rawRes="@raw/recipe"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"/>
+
+                <TextView
+                    android:text="No recipes available!"
+                    android:textSize="16sp"
+                    android:padding="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
 
         </FrameLayout>
 

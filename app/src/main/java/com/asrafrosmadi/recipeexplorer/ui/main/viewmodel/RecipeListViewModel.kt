@@ -26,6 +26,9 @@ class RecipeListViewModel(app: Application) : AndroidViewModel(app) {
     // #6 - Prevent duplicate API calls before livedata loading state updates.
     private var isDataFetch = false
 
+    // #8 - Add new feature as aAdvanced list filters
+    private var advancedFilters = AdvancedFilters()
+
     private val _state = MutableLiveData(UiState())
     val state: LiveData<UiState> = _state
 
@@ -52,6 +55,18 @@ class RecipeListViewModel(app: Application) : AndroidViewModel(app) {
     fun setFilters(difficulty: String, mealType: String) {
         selectedDifficulty = difficulty
         selectedMealType = mealType
+        publish()
+    }
+
+    fun setAdvancedFilters(filters: AdvancedFilters) {
+        advancedFilters = filters
+        publish()
+    }
+
+    fun resetAdvancedFilters() {
+        selectedDifficulty = "All Difficulty"
+        selectedMealType = "All Meal Type"
+        advancedFilters = AdvancedFilters()
         publish()
     }
 
@@ -154,7 +169,55 @@ class RecipeListViewModel(app: Application) : AndroidViewModel(app) {
                     selectedMealType == "All Meal Type" ||
                             recipe.mealType.any { it.equals(selectedMealType, true) }
 
-                diffOk && mealOk
+//                diffOk && mealOk
+
+                val cuisineOk =
+                    advancedFilters.cuisines.isEmpty() ||
+                            advancedFilters.cuisines.any {
+                                recipe.cuisine.equals(it, true)
+                            }
+
+                val cookingTimeOk =
+                    advancedFilters.maxCookingTimeMinutes == null ||
+                            (recipe.prepTimeMinutes + recipe.cookTimeMinutes) <=
+                            advancedFilters.maxCookingTimeMinutes!!
+
+                val ratingOk =
+                    advancedFilters.minRating == null ||
+                            recipe.rating >= advancedFilters.minRating!!
+
+                val caloriesOk =
+                    when (advancedFilters.calorieRange) {
+                        CalorieRange.UNDER_300 ->
+                            recipe.caloriesPerServing < 300
+
+                        CalorieRange.BETWEEN_300_500 ->
+                            recipe.caloriesPerServing in 300..500
+
+                        CalorieRange.ABOVE_500 ->
+                            recipe.caloriesPerServing > 500
+
+                        null -> true
+                    }
+
+                val ingredientsOk =
+                    advancedFilters.ingredients.isEmpty() ||
+                            recipe.ingredients.any { ingredient ->
+                                advancedFilters.ingredients.any { selected ->
+                                    ingredient.contains(selected, ignoreCase = true)
+                                }
+                            }
+
+                val tagsOk =
+                    advancedFilters.tags.isEmpty() ||
+                            recipe.tags.any { tag ->
+                                advancedFilters.tags.any { selected ->
+                                    tag.equals(selected, ignoreCase = true)
+                                }
+                            }
+
+                diffOk && mealOk && cuisineOk && cookingTimeOk &&
+                        ratingOk && caloriesOk && ingredientsOk && tagsOk
             }
         }
 
@@ -170,18 +233,46 @@ class RecipeListViewModel(app: Application) : AndroidViewModel(app) {
                     .distinct()
                     .sorted()
 
+        val cuisines = allLoaded.map { it.cuisine }
+            .filter { it.isNotBlank() }
+            .distinct()
+            .sorted()
+
+        val ingredients = allLoaded.flatMap { it.ingredients }
+            .filter { it.isNotBlank() }
+            .distinct()
+            .sorted()
+
+        val tags = allLoaded.flatMap { it.tags }
+            .filter { it.isNotBlank() }
+            .distinct()
+            .sorted()
+
+        val activeFilterCount =
+            advancedFilters.cuisines.size +
+                    advancedFilters.ingredients.size +
+                    advancedFilters.tags.size +
+                    (if (advancedFilters.maxCookingTimeMinutes != null) 1 else 0) +
+                    (if (advancedFilters.minRating != null) 1 else 0) +
+                    (if (advancedFilters.calorieRange != null) 1 else 0)
+
         _state.postValue(
             UiState(
                 recipes = displayedList,
                 difficulties = difficulties,
                 mealTypes = mealTypes,
+                cuisines = cuisines,
+                ingredients = ingredients,
+                tags = tags,
                 selectedDifficulty = selectedDifficulty,
                 selectedMealType = selectedMealType,
+                advancedFilters = advancedFilters,
                 loading = false,
                 error = error,
                 canLoadMore = skip < total && !isBookmarks,
                 bookmarkMode = isBookmarks,
-                mode = currentMode
+                mode = currentMode,
+                activeFilterCount = activeFilterCount
             )
         )
     }
@@ -191,16 +282,36 @@ class RecipeListViewModel(app: Application) : AndroidViewModel(app) {
         BOOKMARKS
     }
 
+    enum class CalorieRange {
+        UNDER_300,
+        BETWEEN_300_500,
+        ABOVE_500
+    }
+
+    data class AdvancedFilters(
+        val cuisines: Set<String> = emptySet(),
+        val maxCookingTimeMinutes: Int? = null,
+        val minRating: Double? = null,
+        val calorieRange: CalorieRange? = null,
+        val ingredients: Set<String> = emptySet(),
+        val tags: Set<String> = emptySet()
+    )
+
     data class UiState(
         val recipes: List<Recipe> = emptyList(),
         val difficulties: List<String> = listOf("All Difficulty"),
         val mealTypes: List<String> = listOf("All Meal Type"),
+        val cuisines: List<String> = emptyList(),
+        val ingredients: List<String> = emptyList(),
+        val tags: List<String> = emptyList(),
         val selectedDifficulty: String = "All Difficulty",
         val selectedMealType: String = "All Meal Type",
+        val advancedFilters: AdvancedFilters = AdvancedFilters(),
         val loading: Boolean = false,
         val error: String? = null,
         val canLoadMore: Boolean = true,
         val bookmarkMode: Boolean = false,
-        val mode: Mode = Mode.RECIPES
+        val mode: Mode = Mode.RECIPES,
+        val activeFilterCount: Int = 0
     )
 }

@@ -1,11 +1,15 @@
 package com.asrafrosmadi.recipeexplorer.ui.detail
 
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -50,7 +54,9 @@ class RecipeDetailActivity : AppCompatActivity() {
         findViewById<ImageButton>(R.id.backBtn).setOnClickListener {
             finish()
         }
-
+        findViewById<ImageButton>(R.id.shareBtn).setOnClickListener {
+            shareRecipe()
+        }
         findViewById<TextView>(R.id.detailTitle).text = recipe.name
         findViewById<TextView>(R.id.detailRating).text = "⭐ ${recipe.rating}"
         findViewById<TextView>(R.id.detailReviewCount).text = "${recipe.reviewCount} reviews   •   ${recipe.caloriesPerServing} kcal/serving"
@@ -61,19 +67,7 @@ class RecipeDetailActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.detailCook).text = "${recipe.cookTimeMinutes} min"
         findViewById<TextView>(R.id.detailServings).text = "${recipe.servings}"
 
-//        findViewById<TextView>(R.id.detailMeta).text = buildString {
-//            append("• Difficulty: ${recipe.difficulty}\n")
-//            append("• Meal Type: ${recipe.mealType.joinToString(", ")}\n")
-//            append("• Cuisine: ${recipe.cuisine}\n")
-//            append("• Servings: ${recipe.servings} People\n")
-//            append("• Calories: ${recipe.caloriesPerServing} Kcal/Serving\n")
-//            append("${recipe.caloriesPerServing} kcal/serving\n")
-//            append("• Prep Time: ${recipe.prepTimeMinutes} Minutes\n")
-//            append("• Cook Time: ${recipe.cookTimeMinutes} Minutes\n")
-//            append("• Rating ${recipe.rating} (${recipe.reviewCount} reviews)\n")
-//        }
-
-        findViewById<TextView>(R.id.detailIngredients).text =
+        /*findViewById<TextView>(R.id.detailIngredients).text =
             recipe.ingredients
                 .takeIf { it.isNotEmpty() }
                 ?.joinToString(separator = "\n") { "• $it" }
@@ -84,7 +78,27 @@ class RecipeDetailActivity : AppCompatActivity() {
                 .takeIf { it.isNotEmpty() }
                 ?.mapIndexed { index, step -> "${index + 1}. $step" }
                 ?.joinToString(separator = "\n\n")
-                ?: "No instructions available"
+                ?: "No instructions available"*/
+
+        setupChecklistSection(
+            header = findViewById(R.id.ingredientsHeader),
+            clearButton = findViewById(R.id.clearIngredientsTicks),
+            container = findViewById(R.id.detailIngredients),
+            title = "Ingredients",
+            items = recipe.ingredients,
+            storageKey = "ingredients_${recipe.id}",
+            numbered = false
+        )
+
+        setupChecklistSection(
+            header = findViewById(R.id.instructionsHeader),
+            clearButton = findViewById(R.id.clearInstructionsTicks),
+            container = findViewById(R.id.detailInstructions),
+            title = "Instructions",
+            items = recipe.instructions,
+            storageKey = "instructions_${recipe.id}",
+            numbered = true
+        )
 
         ImageLoader.load(
             this,
@@ -93,6 +107,151 @@ class RecipeDetailActivity : AppCompatActivity() {
             lifecycleScope
         )
 
+    }
+
+    private fun setupChecklistSection(
+        header: TextView,
+        clearButton: TextView,
+        container: LinearLayout,
+        title: String,
+        items: List<String>,
+        storageKey: String,
+        numbered: Boolean
+    ) {
+        val prefs = getSharedPreferences("recipe_checklist_prefs", Context.MODE_PRIVATE)
+        val checkedItems = prefs.getStringSet(
+            storageKey,
+            emptySet()
+        )?.toMutableSet() ?: mutableSetOf()
+
+        fun updateClearButtonVisibility() {
+            clearButton.visibility =
+                if (checkedItems.isEmpty())
+                    View.GONE
+                else
+                    View.VISIBLE
+        }
+
+        var isExpanded = true
+
+        fun updateHeader() {
+            header.text = if (isExpanded) "$title ▼" else "$title ▶"
+        }
+
+        fun renderItems() {
+            container.removeAllViews()
+
+            if (items.isEmpty()) {
+                val emptyText = TextView(this).apply {
+                    text = "No $title available"
+                    textSize = 15f
+                }
+                container.addView(emptyText)
+                return
+            }
+
+            items.forEachIndexed { index, item ->
+                val itemKey = index.toString()
+
+                val checkBox = CheckBox(this).apply {
+                    text = if (numbered) "${index + 1}. $item" else item
+                    isChecked = checkedItems.contains(itemKey)
+                    textSize = 15f
+
+                    if (numbered) {
+                        setPadding(0, 8, 0, 8)
+                    }
+
+                    setOnCheckedChangeListener { _, isChecked ->
+                        if (isChecked) {
+                            checkedItems.add(itemKey)
+                        } else {
+                            checkedItems.remove(itemKey)
+                        }
+
+                        prefs.edit()
+                            .putStringSet(storageKey, checkedItems)
+                            .apply()
+
+                        updateClearButtonVisibility()
+                    }
+                }
+
+                if (numbered) {
+                    checkBox.layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    ).apply {
+                        bottomMargin = if (numbered) 24 else 4
+                    }
+                }
+
+                container.addView(checkBox)
+            }
+        }
+
+        header.setOnClickListener {
+            isExpanded = !isExpanded
+            container.visibility = if (isExpanded) View.VISIBLE else View.GONE
+            updateHeader()
+        }
+
+        clearButton.setOnClickListener {
+            prefs.edit()
+                .remove(storageKey)
+                .apply()
+
+            checkedItems.clear()
+            renderItems()
+
+            updateClearButtonVisibility()
+        }
+
+        updateHeader()
+        updateClearButtonVisibility()
+        renderItems()
+    }
+
+    private fun shareRecipe() {
+        val shareText = buildString {
+            appendLine("🍽️ ${recipe.name}")
+            appendLine()
+            appendLine("⭐ Rating: ${recipe.rating}")
+            appendLine("🔥 Calories: ${recipe.caloriesPerServing} kcal/serving")
+            appendLine("🥘 Cuisine: ${recipe.cuisine}")
+            appendLine("⏱️ Prep: ${recipe.prepTimeMinutes} min")
+            appendLine("🍳 Cook: ${recipe.cookTimeMinutes} min")
+            appendLine("👥 Servings: ${recipe.servings}")
+
+            appendLine()
+            appendLine("Ingredients:")
+            recipe.ingredients.forEach {
+                appendLine("• $it")
+            }
+
+            appendLine()
+            appendLine("Instructions:")
+            recipe.instructions.forEachIndexed { index, step ->
+                appendLine("${index + 1}. $step")
+            }
+
+            appendLine()
+            appendLine("📱 Explore more recipes in Recipe Explorer App via Play Store!")
+            appendLine("🔗 https://play.google.com/store/apps/details?id=com.asrafrosmadi.recipeexplorer")
+        }
+
+        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_SUBJECT, recipe.name)
+            putExtra(Intent.EXTRA_TEXT, shareText)
+        }
+
+        startActivity(
+            Intent.createChooser(
+                shareIntent,
+                "Share recipe via"
+            )
+        )
     }
 
     private fun updateFavIcon() {
